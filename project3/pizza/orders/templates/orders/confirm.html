@@ -1,0 +1,169 @@
+{% extends "orders/layout.html" %}
+{% block title %}
+  Confirm
+{% endblock %}
+
+{% block body %}
+  <h1 style="text-align:center">Shopping Cart</h1>
+  <h5 style="text-align:center">Confirm your order</h5>
+  {% if pizza_active == 1 %}
+  <div class="container-fluid" id="pizza">
+    <h2>Pizzas</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Toppings</th>
+          <th>Size</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in shopping_cart %}
+        {% if item.item_class == "pizza" %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>
+            <ul>
+            {% for topping in item.toppings %}
+              <li>{{ topping }}</li>
+            {% endfor %}
+            </ul>
+          </td>
+          <td>{{ item.size }}</td>
+          <td>{{ item.qty }}</td>
+          <td>${{ item.price|floatformat:2 }}</td>
+          <td>${{ item.total|floatformat:2 }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+  {% if pasta_active == 1 %}
+  <div class="container-fluid" id="pasta">
+    <h2>Pastas</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in shopping_cart %}
+        {% if item.item_class == "pasta" %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.qty }}</td>
+          <td>${{ item.price|floatformat:2 }}</td>
+          <td>${{ item.total|floatformat:2 }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+  {% if sub_active == 1 %}
+  <div class="container-fluid" id="sub">
+    <h2>Subs</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Extra Cheese</th>
+          <th>Size</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in shopping_cart %}
+        {% if item.item_class == "sub" %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.extra_cheese }}
+          <td>{{ item.size }}</td>
+          <td>{{ item.qty }}</td>
+          <td>${{ item.price|floatformat:2 }}</td>
+          <td>${{ item.total|floatformat:2 }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+  {% if salad_active == 1 %}
+  <div class="container-fluid" id="salad">
+    <h2>Salads</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in shopping_cart %}
+        {% if item.item_class == "salad" %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.qty }}</td>
+          <td>${{ item.price|floatformat:2 }}</td>
+          <td>${{ item.total|floatformat:2 }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+  {% if dinner_active == 1 %}
+  <div class="container-fluid" id="dinner">
+    <h2>Dinner Platters</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in shopping_cart %}
+        {% if item.item_class == "dinner_platter" %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.size }}</td>
+          <td>{{ item.qty }}</td>
+          <td>${{ item.price|floatformat:2 }}</td>
+          <td>${{ item.total|floatformat:2 }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+  <h3 style="text-align:right">Gross Total : ${{ total|floatformat:2 }}</h3>
+  <div style="text-align:center">
+    <form action="{% url 'confirm' %}" method = "post">
+      {% csrf_token %}
+      <a href="/" class="btn btn-primary">Go Back</a>
+      <input type = "submit" value="Confirm" class="btn btn-primary">
+      <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+    </form>
+  </div>
+{% endblock %}

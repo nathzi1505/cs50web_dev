@@ -1,0 +1,17 @@
+$color : #e1e1e1;
+%custom_bg{
+  background-color: $color;
+}
+body{
+  @extend %custom_bg;
+}
+ol{
+  li{
+    @extend %custom_bg;
+    font-style: italic;
+  }
+}
+p::selection{
+  background-color: yellow;
+  color: black;
+}

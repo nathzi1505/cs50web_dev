@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}
+  Error
+{% endblock %}
+
+{% block body %}
+  <h1>400</h1>
+  <h5>ERROR : {{ error }}</h5>
+  <a href="\registration" class="btn btn-primary">Redirect to Register Page</a>
+  {% if v == 1 %}
+    <a href="\" class="btn btn-primary">Redirect to Home Page</a>
+  {% else %}
+    <a href="\login" class="btn btn-primary">Redirect to Login Page</a>
+  {% endif %}
+{% endblock %}

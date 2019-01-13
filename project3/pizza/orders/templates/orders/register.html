@@ -1,0 +1,77 @@
+{% extends "orders/layout.html" %}
+{% block title %}
+  Register
+{% endblock %}
+
+{% block body %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('form').onsubmit = () => {
+        if (document.querySelector("#first").value === "")
+        {
+          alert("Please enter first name");
+          return false;
+        }
+        else if (document.querySelector("#last").value === "")
+        {
+          alert("Please enter last name");
+          return false;
+        }
+        else if (document.querySelector("#email").value === "")
+        {
+          alert("Please enter email id");
+          return false;
+        }
+        else if (document.querySelector("#username").value === "")
+        {
+          alert("Please enter username");
+          return false;
+        }
+        else if (document.querySelector("#password").value === "")
+        {
+          alert("Please enter password");
+          return false;
+        }
+
+        let flag = 0;
+        let email = document.querySelector("#email").value;
+        let char;
+        for (char of email)
+        {
+          if (char === '@' || char === '.')
+          {
+            flag = 1;
+          }
+        }
+
+        if (flag === 0)
+        {
+          alert("Please enter a valid email id")
+          return false;
+        }
+        return true;
+      };
+    });
+  </script>
+  <h1> Register </h1>
+
+  <form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <input class="form-control" type="text" id="first" name="first" placeholder="John">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="last" name="last" autofocus placeholder="Doe">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="email" name="email" placeholder="john.doe@gmail.com">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" id="username" name="username" autofocus placeholder="johndoe">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="password" id="password" name="password" placeholder="doe12345">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}

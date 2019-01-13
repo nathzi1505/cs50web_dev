@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}
+  Review
+{% endblock %}
+
+{% block body %}
+  <h1>Review</h1>
+  <form action="/review/{{ book_id }}" method="POST">
+    <h3> {{ book_name }} by {{ author }}</h3>
+    <div class="form-group">
+      <label for="rating">
+        Rating
+      </label>
+      <input class="form-control" type="text" name="rating" placeholder="Enter Rating out of 5">
+    </div>
+    <div class="form-group">
+      <label for="review">
+        Review
+      </label>
+      <input class="form-control" type="text" name="review" placeholder="Enter Review">
+    </div>
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+    <a href="\" class="btn btn-primary">Redirect to Home Page</a>
+  </form>
+  {% endblock %}

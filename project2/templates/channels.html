@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Channels
+{% endblock %}
+
+{% block body %}
+  <script>
+    if (!localStorage.getItem('user'))
+      window.location = "/";
+    if (localStorage.getItem('channel'))
+      localStorage.removeItem('channel');
+  </script>
+  <h1>Channels</h1>
+  <h4>Channels available : </h4>
+  <ul>
+    {% for channel in channels %}
+      <li><a href="/channel_view/{{ loop.index - 1 }}">{{ channel }}</a></li>
+    {% endfor %}
+  </ul>
+  <div>
+    <a href="/create" class="btn btn-primary">Create channel</a>
+  </div>
+{% endblock %}

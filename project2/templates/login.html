@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block body %}
+  <script>
+    if (localStorage.getItem('channel'))
+    {
+      let no = localStorage.getItem('channel');
+      window.location = `/channel_view/${no}`;
+    }
+    else if (localStorage.getItem('user'))
+    {
+      window.location = "/channels";
+    }
+  </script>
+  <div>
+    <h1>Login</h1>
+    <form action="/" method="post">
+      <div class="form-group">
+        <input class="form-control" type="text" name="display" autofocus autocomplete="off" placeholder="Enter your display name">
+      </div>
+      <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a href="/register" class="btn btn-primary">Register</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

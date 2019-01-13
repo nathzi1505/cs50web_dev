@@ -1,0 +1,179 @@
+{% extends "orders/layout.html" %}
+{% block title %}
+  Index
+{% endblock %}
+
+{% block body %}
+  <h1 style="text-align:center">Welcome to Pinnochio's Pizza</h1>
+  <p></p>
+  <div class="container-fluid" id="pizza">
+    {% with pizza_count=1000 %}
+    {% with pizza_count_large=2000 %}
+    <h2>Pizzas</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Toppings</th>
+          <th>Small</th>
+          <th></th>
+          <th>Large</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for pizza in pizzas %}
+        <tr>
+          <td>{{ pizza.name }}</td>
+          <td>{{ pizza.type }}</td>
+          <td>{{ pizza.toppings }}</td>
+          <td>${{ pizza.small|floatformat:2 }}</td>
+          <td><a href="{% url 'toppings' forloop.counter|add:pizza_count %}" class="btn btn-primary btn-sm">Add</a></td>
+          <td>${{ pizza.large|floatformat:2 }}</td>
+          <td><a href="{% url 'toppings' forloop.counter|add:pizza_count_large %}" class="btn btn-primary btn-sm">Add</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endwith %}
+    {% endwith %}
+  </div>
+  <div class="container-fluid" id="sub">
+    <h2>Subs</h2>
+    {% with sub_count=400 %}
+    {% with sub_count_large=500 %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Small</th>
+          <th></th>
+          <th>Large</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for sub in subs %}
+        <tr>
+          <td>{{ sub.name }}</td>
+          <td>${{ sub.small|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:sub_count %}" class="btn btn-primary btn-sm">Add</a></td>
+          <td>${{ sub.large|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:sub_count_large %}" class="btn btn-primary btn-sm">Add</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    {% endwith %}
+    {% endwith %}
+    <h3>Extra cheese Subs</h3>
+    {% with sube_count=4000 %}
+    {% with sube_count_large=5000 %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Small</th>
+          <th></th>
+          <th>Large</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for sub in subs_e %}
+        <tr>
+          <td>{{ sub.name }}</td>
+          <td>${{ sub.small|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:sube_count %}" class="btn btn-primary btn-sm">Add</a></td>
+          <td>${{ sub.large|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:sube_count_large %}" class="btn btn-primary btn-sm">Add</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    {% endwith %}
+    {% endwith %}
+  </div>
+  <p></p>
+  <div class="container-fluid" id="pasta">
+    {% with pasta_count=600 %}
+    <h2>Pastas</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for pasta in pastas %}
+        <tr>
+          <td>{{ pasta.name }}</td>
+          <td>${{ pasta.price|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:pasta_count %}" class="btn btn-primary btn-sm">Add</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    {% endwith %}
+  </div>
+  <div class="container-fluid" id="dinner">
+    <h2>Dinner Platters</h2>
+    {% with dinner_count=700 %}
+    {% with dinner_count_large=900 %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Small</th>
+          <th></th>
+          <th>Large</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for dinner in dinners %}
+        <tr>
+          <td>{{ dinner.name }}</td>
+          <td>${{ dinner.small|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:dinner_count %}" class="btn btn-primary btn-sm">Add</a></td>
+          <td>${{ dinner.large|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:dinner_count_large %}" class="btn btn-primary btn-sm">Add</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    {% endwith %}
+    {% endwith %}
+  </div>
+  <div class="container-fluid" id="salad">
+    {% with salad_count=800 %}
+    <h2>Salads</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for salad in salads %}
+        <tr>
+          <td>{{ salad.name }}</td>
+          <td>${{ salad.price|floatformat:2 }}</td>
+          <td><a href="{% url 'shopping' forloop.counter|add:salad_count %}" class="btn btn-primary btn-sm">Add</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    {% endwith %}
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+  <a href="{% url 'shopping_view' %}" class="btn btn-primary">Shopping Cart</a>
+{% endblock %}

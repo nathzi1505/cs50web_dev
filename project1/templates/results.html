@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}
+  Results
+{% endblock %}
+
+{% block body %}
+  <h1> Results </h1>
+  <h5> No. of matches : {{ n }}</h5>
+  <p></p>
+  <div>
+    <ol>
+    {% for book in rows %}
+      <li> <a href="/book/{{ book["id"] }}"> {{ book["title"] }} by {{ book["author"] }} </a> </li>
+    {% endfor %}
+    </ol>
+    <a href="\" class="btn btn-primary">Redirect to Home Page</a>
+  </div>
+{% endblock %}

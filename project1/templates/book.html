@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}
+  Description
+{% endblock %}
+
+{% block body %}
+  <h1> Description </h1>
+  <div class="container">
+     <h4> Name : {{ book["title"] }} </h4>
+     <h4> Author : {{ book["author"] }} </h4>
+     <h4> Year : {{ book["year"] }} </h4>
+     <h4> ISBN : {{ book["isbn"] }} </h4>
+     <h4> Average Rating : {{ result[0]["average_rating"] }}</h4>
+     <h4> No. of Ratings : {{ result[0]["work_ratings_count" ]}}</h4>
+  </div>
+  <h1> Reviews </h1>
+  <div class="container">
+    <h5> No. of Reviews : {{ n }} </h5>
+  </div>
+  <div class="container">
+    <ol>
+      {% for review in reviews %}
+        <li> <b> Anonymous </b> gave <b>{{ review["rating"] }}</b> says <b>"{{ review["review"] }}"</b></li>
+      {% endfor %}
+    </ol>
+  </div>
+  <p></p>
+  <a href="/review/{{ book["id"] }}" class="btn btn-primary">Submit a Review</a>
+  <a href="\" class="btn btn-primary">Redirect to Home Page</a>
+{% endblock %}
+
+{% block footer %}
+  <div class="container">
+    Data provided by <a href="https://www.goodreads.com">Goodreads</href>.
+  </div>
+{% endblock %}

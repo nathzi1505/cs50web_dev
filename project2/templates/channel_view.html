@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Channel : {{ channel_name }}
+{% endblock %}
+
+{% block body %}
+<h1>Channel : {{ channel_name }}</h1>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script>
+  if (!localStorage.getItem('user'))
+      window.location = "/";
+    localStorage.setItem('channel', {{ channel_no|safe }});
+    var currentdate, datetime;
+    function Time(){
+      currentdate = new Date();
+      datetime = currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+      setTimeout(Time,1000);
+    };
+    Time();
+    const user = localStorage.getItem('user');
+    localStorage.setItem('no', {{ channel_no|safe }});
+    document.addEventListener('DOMContentLoaded', () => {
+      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+      // When connected, configure form
+      socket.on('connect', () => {
+        document.querySelector('form').onsubmit = () => {
+          const message = document.querySelector("#message").value;
+          const no = localStorage.getItem('no');
+          socket.emit('submit message', {'no':no, 'user':user, 'message':message, 'time':datetime});
+          document.querySelector("#message").value = '';
+          return false;
+        };
+        document.querySelector('#delete').onclick = () => {
+          document.querySelector('form').onsubmit = () => {
+            return false;
+          };
+          const no = localStorage.getItem('no');
+          socket.emit('delete', {'channel_no':no, 'user':user});
+        };
+      });
+      socket.on('announce message', data => {
+        const li = document.createElement('li');
+        li.innerHTML = `<b>${data.user}</b> : ${data.message} at ${data.time}`;
+        document.querySelector('#messages_list').append(li);
+      });
+      socket.on('refresh', () => {
+        window.location.reload();
+      });
+    });
+  </script>
+<h3>Messages</h3>
+<ul id='messages_list'>
+  {% for message in channel_messages %}
+  {% if loop.index >= start %}
+  <li><b>{{ message["user"] }}</b> : {{ message["message"] }} at {{ message["time"] }} </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+<h3>Add a message</h3>
+<form>
+  <div class="form-group">
+    <input class="form-control" id ="message" type="text" name="message" autofocus autocomplete="off" placeholder="Enter your message">
+    </div>
+    <div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+      <button id = "delete" class="btn btn-primary">Delete Recent</button>
+      <a href="/channels" class="btn btn-primary">View the channels</a>
+    </div>
+</form>
+{% endblock %}

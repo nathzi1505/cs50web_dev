@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Success
+{% endblock %}
+
+{% block body %}
+  <script>
+      localStorage.setItem('user',"{{ user|safe }}");
+  </script>
+  <h1>Success!</h1>
+  <h3>You have successfully logged in</h3>
+  <div>
+    <a href="/channels" class="btn btn-primary">Go to channels page</a>
+  </div>
+{% endblock %}

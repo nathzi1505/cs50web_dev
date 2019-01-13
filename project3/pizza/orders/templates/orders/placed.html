@@ -1,0 +1,56 @@
+{% extends "orders/layout.html" %}
+{% block title %}
+  Placed orders
+{% endblock %}
+
+{% block body %}
+  <h1 style="text-align:center">Orders Placed</h1>
+  {% for order in orders %}
+    <h2 style="text-align:left">Name : {{ order.user.first_name }} {{ order.user.last_name }}</h2>
+    <h3 style="text-align:left">Order No : {{ order.no }}</h3>
+    <h4 style="text-align:right">Gross Total : ${{ order.total|floatformat:2 }}</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Class</th>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Extra Cheese</th>
+          <th>Toppings</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Total</th>
+        <tr>
+      </thead>
+      <tbody>
+        {% for item in order.contents %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.item_class|title }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.size }}</td>
+            <td>{{ item.extra_cheese }}</td>
+            <td>
+              <ul>
+              {% for topping in item.toppings %}
+                <li>{{ topping }}</li>
+              {% endfor %}
+              </ul>
+            </td>
+            <td>${{ item.price|floatformat:2 }}</td>
+            <td>{{ item.qty }}</td>
+            <td>${{ item.total|floatformat:2 }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="text-align:right">
+      <form action="{% url 'placed' %}" method="post">
+        {% csrf_token %}
+        <input type="number" style="width:40px" name="order_no" value={{ forloop.counter }}>
+        <button type="submit" class="btn btn-primary btn-sm">Complete</button>
+      </form>
+    </div>
+  {% endfor %}
+{% endblock %}

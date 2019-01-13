@@ -1,0 +1,62 @@
+{% extends "orders/layout.html" %}
+{% block title %}
+  Toppings
+{% endblock %}
+
+{% block body %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('form').onsubmit = () => {
+        let flag = 0;
+        let n = {{ no|safe }};
+        let i, j;
+        for (i = 1; i <= n; i++)
+        {
+          var select1 = document.getElementById(`${i}`);
+          var val1 = select1.options[select1.selectedIndex].value;
+          for (j = i + 1; j <= n; j++)
+          {
+            var select2 = document.getElementById(`${j}`);
+            var val2 = select2.options[select2.selectedIndex].value;
+            if (val1 === val2)
+            {
+              flag = 1;
+            }
+          }
+        }
+
+        if (flag === 1)
+        {
+          alert("Toppings should be unique");
+          return false;
+        }
+        else
+        {
+          return true;
+        }
+
+      };
+    });
+  </script>
+
+  {% with counter=0 %}
+  <h1 style="text-align:center">Toppings</h1>
+  <form action="{% url 'toppings' item_no %}" method="post">
+  {% csrf_token %}
+  {% if not no == 0 %}
+    <div class="container">
+      {% for i in word %}
+        Topping {{ forloop.counter }} :
+        <select id={{ counter|add:forloop.counter }} name={{ counter|add:forloop.counter }}>
+          {% for topping in toppings %}
+            <option value={{ topping.name }}>{{ topping.name }}</option>
+          {% endfor %}
+        </select>
+        <p></p>
+      {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit your choices</button>
+  </div>
+  {% endif %}
+  </form>
+  {% endwith %}
+{% endblock %}
